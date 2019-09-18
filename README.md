@@ -10,3 +10,11 @@ www.example.com
 www.example.edu
 www.example.net
 ```
+
+You can also supply an optional port number
+
+```
+$ certrip -p 8443 example.com
+www.example.org
+example.com
+```
