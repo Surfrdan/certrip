@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 
-import sys
-from socket import socket
-from cryptography import x509
-from cryptography.hazmat.backends import default_backend
 import argparse
-import socket
-import ssl
+import certrip
 
 parser = argparse.ArgumentParser()
 parser.add_argument("host", type=str)
@@ -17,35 +12,6 @@ args = parser.parse_args()
 host = args.host
 port = args.port
 
-host = host.rstrip()
-context = ssl.create_default_context()
-context.check_hostname = False
-context.verify_mode = ssl.CERT_NONE
-try:
-    with socket.create_connection((host, port), timeout=0.3) as sock:
-        with context.wrap_socket(sock, server_hostname=host) as ssock:
-            pem_data = ssl.DER_cert_to_PEM_cert(ssock.getpeercert(True))
-            cert = x509.load_pem_x509_certificate(str.encode(pem_data), default_backend())
-            san = cert.extensions.get_extension_for_oid(x509.oid.ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
-            for dns_name in san.value:
-                print (dns_name.value)
-            sock.shutdown(socket.SHUT_RDWR)
-            sock.close()
-except ssl.SSLError:
-    sys.exit()
-    pass
-except socket.timeout:
-    sys.exit()
-    pass
-except TimeoutError:
-    sys.exit()
-    pass
-except socket.gaierror:
-    sys.exit()
-    pass
-except ConnectionRefusedError:
-    sys.exit()
-    pass
-except OSError:
-    sys.exit()
-    pass
+hosts = certrip.certrip(host, port)
+for host in hosts:
+    print(host)
