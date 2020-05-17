@@ -2,6 +2,7 @@ import sys
 from socket import socket
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
+import cryptography
 import socket
 import ssl
 
@@ -22,20 +23,22 @@ def certrip(host, port):
                 sock.close()
                 return dns_names
     except ssl.SSLError:
-        sys.exit()
+    #    sys.exit()
         pass
     except socket.timeout:
-        sys.exit()
+    #    sys.exit()
         pass
     except TimeoutError:
-        sys.exit()
+    #    sys.exit()
         pass
     except socket.gaierror:
-        sys.exit()
+    #    sys.exit()
         pass
     except ConnectionRefusedError:
-        sys.exit()
+    #    sys.exit()
+        pass
+    except cryptography.x509.extensions.ExtensionNotFound:
         pass
     except OSError:
-        sys.exit()
+    #    sys.exit()
         pass
