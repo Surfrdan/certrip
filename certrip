@@ -17,5 +17,6 @@ if(isinstance(host, io.IOBase)):
     host = host.read()
 
 hosts = certrip.certrip(host, port)
-for host in hosts:
-    print(host)
+if (hosts):
+    for host in hosts:
+        print(host)
