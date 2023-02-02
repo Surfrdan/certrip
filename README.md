@@ -1,4 +1,4 @@
-Simply supply hostname as single argument and return list of all Subejct Alternative Names for the TLS certificate
+Simply supply hostname as single argument and return list of all Subject Alternative Names for the TLS certificate
 ```
 $ certrip example.com
 www.example.org
